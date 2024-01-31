@@ -1,0 +1,45 @@
+local Request = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+
+-- Ðu?ng d?n d?n webhook Discord
+local webhookUrl = "https://discord.com/api/webhooks/1202248560515751946/JdL3SLVV-VqufGi2lz3d5t2ttX1QhahppoUhkeB6uKN7I1YFOefGIIW4holWxoDqDt2M"
+
+-- L?y player và giá tr? c?a Diamonds
+local plr = game.Players.LocalPlayer
+local leaderstats = plr:FindFirstChild("leaderstats")
+local diamondsStat = leaderstats and leaderstats:FindFirstChild("\240\159\146\142 Diamonds")
+local diamondsValue = diamondsStat and diamondsStat.Value
+
+-- L?y tên ngu?i choi Roblox
+local robloxUserName = plr and plr.Name
+
+-- Ki?m tra xem có giá tr? Diamonds và tên ngu?i choi hay không
+if diamondsValue and robloxUserName then
+    -- Chu?n b? n?i dung thông di?p
+    local message = {
+        content = "Player: " .. robloxUserName .. "\nGiá tr? c?a Diamonds là: " .. diamondsValue
+    }
+
+    -- Chuy?n d?i thông di?p thành JSON
+    local jsonMessage = game:GetService("HttpService"):JSONEncode(message)
+
+    -- G?i thông di?p d?n webhook Discord
+    local success, response = pcall(function()
+        return Request({
+            Url = webhookUrl,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = jsonMessage
+        })
+    end)
+
+    -- Ki?m tra xem g?i thành công hay không
+    if success then
+        print("Thông di?p dã du?c g?i thành công.")
+    else
+        warn("Không th? g?i thông di?p d?n webhook Discord:", response)
+    end
+else
+    warn("Không tìm th?y giá tr? Diamonds ho?c tên ngu?i choi.")
+end
