@@ -11,14 +11,20 @@ local diamondsValue = diamondsStat and diamondsStat.Value
 -- Lấy tên người chơi Roblox
 local robloxUserName = plr and plr.Name
 
+-- Lấy giá trị của thuộc tính "Coin" từ dữ liệu của người chơi
+local coinValue = 0
+local success, error = pcall(function()
+    coinValue = plr.Data.Coin.Value
+end)
+
 -- Lấy webhookUrl từ biến getgenv().Set.webhook
 local webhookUrl = getgenv().Set.webhook
 
--- Kiểm tra xem có giá trị Diamonds, tên người chơi và webhookUrl hay không
-if diamondsValue and robloxUserName and webhookUrl then
+-- Kiểm tra xem có giá trị Diamonds, Coin, tên người chơi và webhookUrl hay không
+if diamondsValue and coinValue and robloxUserName and webhookUrl then
     -- Chuẩn bị nội dung thông điệp
     local message = {
-        content = "Player: " .. robloxUserName .. "\nGiá trị của Diamonds là: " .. diamondsValue
+        content = "Player: " .. robloxUserName .. "\nGiá trị của Diamonds là: " .. diamondsValue .. "\nGiá trị của Coin là: " .. coinValue
     }
 
     -- Chuyển đổi thông điệp thành JSON
@@ -43,24 +49,40 @@ if diamondsValue and robloxUserName and webhookUrl then
         warn("Không thể gửi thông điệp đến webhook Discord:", response)
     end
 
-    -- Tạo GUI (User Interface) để hiển thị giá trị Diamonds
+    -- Tạo GUI (User Interface) để hiển thị giá trị Diamonds và Coin
     local gui = Instance.new("ScreenGui")
     gui.Parent = game.Players.LocalPlayer.PlayerGui
 
     local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0, 200, 0, 50)
+    frame.Size = UDim2.new(0, 200, 0, 80) -- Tăng chiều cao để chứa thông tin Coin
     frame.Position = UDim2.new(0.5, -100, 0, 50)
     frame.BackgroundColor3 = Color3.new(0, 0, 0)
     frame.BorderSizePixel = 2
     frame.BorderColor3 = Color3.new(1, 1, 1)
     frame.Parent = gui
 
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, 0, 1, 0)
-    label.Text = "Diamonds: " .. tostring(diamondsValue)
-    label.TextColor3 = Color3.new(1, 1, 1)
-    label.BackgroundTransparency = 1
-    label.Parent = frame
+    local label1 = Instance.new("TextLabel")
+    label1.Size = UDim2.new(1, 0, 0.5, 0) -- Chiều cao giảm để chứa thông tin Coin
+    label1.Text = "Player: " .. robloxUserName
+    label1.TextColor3 = Color3.new(1, 1, 1)
+    label1.BackgroundTransparency = 1
+    label1.Parent = frame
+
+    local label2 = Instance.new("TextLabel")
+    label2.Size = UDim2.new(1, 0, 0.5, 0)
+    label2.Position = UDim2.new(0, 0, 0.5, 0) -- Dịch chuyển xuống để chứa thông tin Coin
+    label2.Text = "Coin: " .. coinValue
+    label2.TextColor3 = Color3.new(1, 1, 1)
+    label2.BackgroundTransparency = 1
+    label2.Parent = frame
+
+    local label3 = Instance.new("TextLabel")
+    label3.Size = UDim2.new(1, 0, 0.5, 0)
+    label3.Position = UDim2.new(0, 0, 1, 0) -- Dịch chuyển xuống để chứa thông tin Diamonds
+    label3.Text = "Diamonds: " .. tostring(diamondsValue)
+    label3.TextColor3 = Color3.new(1, 1, 1)
+    label3.BackgroundTransparency = 1
+    label3.Parent = frame
 else
-    warn("Không tìm thấy giá trị Diamonds, tên người chơi, hoặc webhookUrl.")
+    warn("Không tìm thấy giá trị Diamonds, Coin, tên người chơi, hoặc webhookUrl.")
 end
