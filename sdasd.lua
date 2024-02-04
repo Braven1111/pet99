@@ -1,6 +1,5 @@
 local url = 'http://103.56.161.244:3979/layfile'
 local Request = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
-
 repeat wait() until game:FindFirstChild("CoreGui") and game.Players.LocalPlayer
 repeat wait(.25) until game:IsLoaded() and game.Players.LocalPlayer.Character
 
