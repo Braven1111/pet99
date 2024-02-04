@@ -184,12 +184,8 @@ pcall(function()
                 ['Dark Fragment'] = pvData['content']['Inventory']['Material']['Dark Fragment'] or 0
             }
 			
-			-- Trích xuất phần trước dấu "-" từ chuỗi 'InventoryFruit'
 			local fullStringInventoryFruit = pvData['content']['Inventory']['Blox Fruit']
 			local extractedPartInventoryFruit = fullStringInventoryFruit:match("([^%-]+)")
-
-			-- Gán phần trích xuất vào 'InventoryFruit' trong 'trimmedData'
-			trimmedData['InventoryFruit'] = extractedPartInventoryFruit or fullStringInventoryFruit
 
 
             local trimmedData = {
@@ -199,8 +195,8 @@ pcall(function()
                 Wear = filteredWear,
                 Gun = filteredGuns,
                 Sword = cursedSwords,
-    			InventoryFruit = (pvData['content']['Inventory']['Blox Fruit']):match("([^%-]+)") or pvData['content']['Inventory']['Blox Fruit'],
-                PlaceName = pvData['content']['Current Server']['Place Name'],
+ 		InventoryFruit = extractedPartInventoryFruit or fullStringInventoryFruit,                
+		PlaceName = pvData['content']['Current Server']['Place Name'],
                 Skills = pvData['content']['Fighting Style'],
                 Fragments = pvData['content']['Data']['Fragments'],
                 Beli = pvData['content']['Data']['Beli'],
