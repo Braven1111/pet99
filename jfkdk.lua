@@ -184,8 +184,8 @@ pcall(function()
                 ['Dark Fragment'] = pvData['content']['Inventory']['Material']['Dark Fragment'] or 0
             }
 			
-			local fullStringInventoryFruit = pvData['content']['Inventory']['Blox Fruit']
-			local extractedPartInventoryFruit = fullStringInventoryFruit:match("([^%-]+)")
+		local fullStringInventoryFruit = pvData['content']['Inventory']['Blox Fruit']
+		local extractedPartInventoryFruit = fullStringInventoryFruit:match("([^%-]+)")
 
 
             local trimmedData = {
@@ -195,7 +195,7 @@ pcall(function()
                 Wear = filteredWear,
                 Gun = filteredGuns,
                 Sword = cursedSwords,
- 		InventoryFruit = extractedPartInventoryFruit or fullStringInventoryFruit,                
+ 		InventoryFruit = extractedPartInventoryFruit,                
 		PlaceName = pvData['content']['Current Server']['Place Name'],
                 Skills = pvData['content']['Fighting Style'],
                 Fragments = pvData['content']['Data']['Fragments'],
