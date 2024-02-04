@@ -1,6 +1,3 @@
-
-
-Ctrl+i
 local url = 'http://103.56.161.244:3979/layfile'
 local Request = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 
